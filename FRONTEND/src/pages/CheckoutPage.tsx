@@ -20,7 +20,7 @@ const CheckoutPage = ({ cart, removeFromCart, clearCart, fetchProducts }: any) =
     try {
       if (metodo === 'MP') {
         // --- LLAMADA SEGURA AL BACKEND (DESCUENTA STOCK Y REGISTRA VENTA) ---
-        await axios.post('http://localhost:3000/api/checkout', { cart });
+        await axios.post('https://gameshopterminado.onrender.com/api/checkout', { cart });
 
         if (fetchProducts) await fetchProducts(); 
         

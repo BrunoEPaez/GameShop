@@ -43,7 +43,7 @@ const AdminPanel = ({ products, isMaintenance, setIsMaintenance }: any) => {
   useEffect(() => {
     const fetchSales = async () => {
       try {
-        const res = await axios.get('http://localhost:3000/api/sales');
+        const res = await axios.get('https://gameshopterminado.onrender.com/api/sales');
         setSales(res.data);
       } catch (e) {
         console.error("Error cargando ventas", e);
@@ -104,10 +104,10 @@ const AdminPanel = ({ products, isMaintenance, setIsMaintenance }: any) => {
     try {
       const config = { headers: { 'Content-Type': 'multipart/form-data' } };
       if (isEditing && editingId) {
-        await axios.patch(`http://localhost:3000/api/products/${editingId}`, formData, config);
+        await axios.patch(`https://gameshopterminado.onrender.com/api/products/${editingId}`, formData, config);
         alert("NÚCLEO ACTUALIZADO CORRECTAMENTE");
       } else {
-        await axios.post('http://localhost:3000/api/products', formData, config);
+        await axios.post('https://gameshopterminado.onrender.com/api/products', formData, config);
         alert("NUEVO ÍTEM SINCRONIZADO");
       }
       window.location.reload();
@@ -119,7 +119,7 @@ const AdminPanel = ({ products, isMaintenance, setIsMaintenance }: any) => {
   const toggleMaintenance = async () => {
     const nuevoEstado = !isMaintenance;
     try {
-      await axios.patch(`http://localhost:3000/api/settings/maintenance_mode`, {
+      await axios.patch(`https://gameshopterminado.onrender.com/api/settings/maintenance_mode`, {
         value: nuevoEstado
       });
       setIsMaintenance(nuevoEstado);
@@ -131,7 +131,7 @@ const AdminPanel = ({ products, isMaintenance, setIsMaintenance }: any) => {
   const handleDelete = async (id: number) => {
     if (window.confirm("¿ELIMINAR PRODUCTO DEL NÚCLEO?")) {
       try {
-        await axios.delete(`http://localhost:3000/api/products/${id}`);
+        await axios.delete(`https://gameshopterminado.onrender.com/api/products/${id}`);
         window.location.reload();
       } catch (error) {
         alert("ERROR AL ELIMINAR");

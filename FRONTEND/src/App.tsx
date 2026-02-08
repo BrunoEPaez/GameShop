@@ -49,7 +49,7 @@ export default function App() {
   // --- 1. DEFINIR LA FUNCIÓN QUE FALTABA ---
   const fetchProducts = useCallback(async () => {
     try {
-      const res = await axios.get('http://localhost:3000/api/products');
+      const res = await axios.get('https://gameshopterminado.onrender.com/api/products');
       setProducts(res.data);
       setLoading(false);
     } catch (err) {
@@ -63,7 +63,7 @@ export default function App() {
     const checkMaintenance = async () => {
       try {
         // Consultamos el registro con key 'maintenance_mode'
-        const res = await axios.get('http://localhost:3000/api/settings/maintenance_mode');
+        const res = await axios.get('https://gameshopterminado.onrender.com/api/settings/maintenance_mode');
         setIsMaintenance(res.data.value);
       } catch (e) {
         console.error("Error al leer modo mantenimiento", e);

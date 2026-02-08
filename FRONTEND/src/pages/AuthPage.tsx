@@ -27,10 +27,10 @@ const AuthPage = () => {
     try {
       let response;
       if (!isLogin) {
-        response = await axios.post('http://localhost:3000/api/signup', signupData);
+        response = await axios.post('https://gameshopterminado.onrender.com/api/signup', signupData);
         alert("¡PILOTO REGISTRADO!");
       } else {
-        response = await axios.post('http://localhost:3000/api/login', loginData);
+        response = await axios.post('https://gameshopterminado.onrender.com/api/login', loginData);
       }
 
       // IMPORTANTE: Guardamos con la misma clave que busca App.tsx
