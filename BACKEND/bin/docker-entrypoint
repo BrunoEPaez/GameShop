@@ -1,8 +1,17 @@
-#!/bin/bash -e
+#!/bin/bash
+set -e
 
-# If running the rails server then create or migrate existing database
-if [ "${@: -2:1}" == "./bin/rails" ] && [ "${@: -1:1}" == "server" ]; then
-  ./bin/rails db:prepare
+# Imprimir un mensaje para saber que el entrypoint se está ejecutando (verás esto en los logs)
+echo "--- Iniciando el Entrypoint de Rails ---"
+
+# Ejecuta las migraciones/preparación de la base de datos solo si estamos en producción
+# Esto es lo que reemplaza al "Pre-deploy command" que es de pago
+if [ "$RAILS_ENV" = "production" ]; then
+  echo "Ejecutando bin/rails db:prepare..."
+  bundle exec rails db:prepare
 fi
 
-exec "${@}"
+# El comando 'exec "$@"' hace que el contenedor ejecute el CMD del Dockerfile
+# que en tu caso es: ./bin/thrust ./bin/rails server
+echo "Lanzando el servidor..."
+exec "$@"
