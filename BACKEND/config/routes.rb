@@ -1,4 +1,3 @@
-# backend/config/routes.rb
 Rails.application.routes.draw do
   # Devise maneja la lógica interna de usuarios
   devise_for :users
@@ -11,13 +10,13 @@ Rails.application.routes.draw do
 
     # Tienda y Productos
     resources :products
-    post 'checkout', to: 'products#checkout' # La ruta segura que creamos
+    post 'checkout', to: 'products#checkout'
 
     # Administración y Ventas
     get 'sales', to: 'sales#index'
     resources :settings, only: [:show, :update]
     
-    # Favoritos y Aplicaciones (Si aún los usas)
+    # Favoritos y Aplicaciones
     resources :favorites, only: [:index, :create]
     delete 'favorites', to: 'favorites#destroy'
     
@@ -29,6 +28,11 @@ Rails.application.routes.draw do
     resources :jobs
   end
 
-  # Ruta fuera de namespace para acceso directo si fuera necesario
+  # Ruta fuera de namespace para acceso directo
   resources :products, only: [:index, :show]
+
+  # SOLUCIÓN AL ERROR DE RENDER:
+  # Define la raíz de la aplicación. 
+  # Redirige "/" a la lista de productos de la API
+  root to: "api/products#index"
 end
