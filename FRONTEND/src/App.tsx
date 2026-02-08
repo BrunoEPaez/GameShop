@@ -19,7 +19,6 @@ export default function App() {
   const [loading, setLoading] = useState(true);
   const [showNavMenu, setShowNavMenu] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
-  const [notifications, setNotifications] = useState<any[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
   const navigate = useNavigate();
   // --- MODIFICACIÓN: Estado de Usuario dinámico ---
@@ -27,7 +26,7 @@ export default function App() {
     const savedUser = localStorage.getItem('gamer_user');
     return savedUser ? JSON.parse(savedUser) : null;
   });
-
+ 
   // El Admin ahora es real: solo si el email coincide
   const isAdmin = user?.email === 'admin@gamershop.com'; 
 
@@ -141,14 +140,7 @@ export default function App() {
       
       <div className="background-world"><div className="floor-pixel"></div></div>
       
-      <div className="toast-container">
-        {notifications.map((n) => (
-          <div key={n.id} className="toast-card">
-            <span className="toast-icon">[+]</span>
-            <span className="toast-text">{n.message}</span> 
-          </div>
-        ))}
-      </div>
+      
 
       {isMaintenance && (
   <div style={{
