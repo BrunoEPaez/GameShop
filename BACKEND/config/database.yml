@@ -1,36 +1,44 @@
-# Configuración base para no repetir código
+# Configuración base
 default: &default
   adapter: postgresql
   encoding: unicode
+  # El pool es importante para no saturar las conexiones de Supabase
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  username: postgres
-  password: 123456  # <--- CAMBIA ESTO por tu contraseña real
-  host: 127.0.0.1
+  timeout: 5000
 
 development:
   <<: *default
   database: gamershop_development
+  username: postgres
+  password: password # Tu password local
+  host: localhost
 
 test:
   <<: *default
   database: gamershop_test
+  username: postgres
+  password: password
+  host: localhost
 
-# Configuración de producción para Rails 8
+# Configuración de producción optimizada para Rails 8 + Supabase
 production:
   primary: &primary_production
     <<: *default
-    database: gamershop_production
-    username: backend
-    password: <%= ENV["BACKEND_DATABASE_PASSWORD"] %>
+    # Usamos la variable de entorno completa para la conexión
+    url: <%= ENV["DATABASE_URL"] %>
+    # Desactivamos el preparado de sentencias si usas el Pooler de Supabase (puerto 6543)
+    prepared_statements: false
+
+  # Rails 8 usa estas bases para caché y colas. 
+  # En Supabase apuntamos todas a la misma base primaria para evitar complicaciones.
   cache:
     <<: *primary_production
-    database: gamershop_production_cache
     migrations_paths: db/cache_migrate
+  
   queue:
     <<: *primary_production
-    database: gamershop_production_queue
     migrations_paths: db/queue_migrate
+  
   cable:
     <<: *primary_production
-    database: gamershop_production_cable
     migrations_paths: db/cable_migrate
